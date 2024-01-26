@@ -6,7 +6,9 @@ import { RegisterDto } from './dto/register.dto';
 import { sign } from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
 import { UserResponseInterface } from './types/user-response.interface';
-import { EMAIL_OR_USERNAME_TAKEN_ERROR } from './users.constants';
+import { CREDENTIALS_NOT_VALID_ERROR, EMAIL_OR_USERNAME_TAKEN_ERROR } from './users.constants';
+import { LoginDto } from './dto/login.dto';
+import { compare } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -35,6 +37,27 @@ export class UsersService {
     Object.assign(newUser, registerDto);
 
     return await this.userRepository.save(newUser);
+  }
+
+  public async signin(loginDto: LoginDto): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({
+      where: { email: loginDto.email },
+      select: ['id', 'email', 'username', 'password'],
+    });
+
+    if (!user) {
+      throw new HttpException(CREDENTIALS_NOT_VALID_ERROR, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    const isPasswordCorrect: boolean = await compare(loginDto.password, user.password);
+
+    if (!isPasswordCorrect) {
+      throw new HttpException(CREDENTIALS_NOT_VALID_ERROR, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    delete user.password;
+
+    return user;
   }
 
   public generateJwt(user: UserEntity): string {
