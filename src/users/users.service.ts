@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
+import { RegisterDto } from './dto/register.dto';
 import { sign } from 'jsonwebtoken';
 import { ConfigService } from '@nestjs/config';
 import { UserResponseInterface } from './types/user-response.interface';
@@ -18,13 +18,13 @@ export class UsersService {
     private readonly configService: ConfigService,
   ) {}
 
-  public async signup(createUserDto: CreateUserDto): Promise<UserEntity> {
+  public async signup(registerDto: RegisterDto): Promise<UserEntity> {
     const userByEmail = await this.userRepository.findOne({
-      where: { email: createUserDto.email },
+      where: { email: registerDto.email },
     });
 
     const userByUsername = await this.userRepository.findOne({
-      where: { username: createUserDto.username },
+      where: { username: registerDto.username },
     });
 
     if (userByEmail || userByUsername) {
@@ -32,7 +32,7 @@ export class UsersService {
     }
 
     const newUser = new UserEntity();
-    Object.assign(newUser, createUserDto);
+    Object.assign(newUser, registerDto);
 
     return await this.userRepository.save(newUser);
   }
