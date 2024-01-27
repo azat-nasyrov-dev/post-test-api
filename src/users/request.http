@@ -24,3 +24,15 @@ Content-Type: application/json
 ### Current User
 GET http://localhost:3001/api/user
 Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY3ZjRhYTEwLWY3NjAtNDJkOS1hYzVlLTIzNzlkZWI3MjZhNyIsImVtYWlsIjoiam9obmRvZUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE3MDYzNTczODF9.wbY9k71bXsjHAiz7Mifx9g2D4EM6w_Rg8eAqfkBk_VQ
+
+
+### Update Current User
+PUT http://localhost:3001/api/user
+Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY3ZjRhYTEwLWY3NjAtNDJkOS1hYzVlLTIzNzlkZWI3MjZhNyIsImVtYWlsIjoiam9obmRvZUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE3MDYzNTczODF9.wbY9k71bXsjHAiz7Mifx9g2D4EM6w_Rg8eAqfkBk_VQ
+Content-Type: application/json
+
+{
+  "user": {
+    "username": "john doe"
+  }
+}
