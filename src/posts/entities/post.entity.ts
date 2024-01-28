@@ -23,6 +23,6 @@ export class PostEntity {
     this.updatedAt = new Date();
   }
 
-  @ManyToOne(() => UserEntity, (user) => user.posts)
+  @ManyToOne(() => UserEntity, (user) => user.posts, { eager: true })
   author: UserEntity;
 }
