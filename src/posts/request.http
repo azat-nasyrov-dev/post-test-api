@@ -1,0 +1,33 @@
+### Create Post
+POST http://localhost:3001/api/posts
+Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY3ZjRhYTEwLWY3NjAtNDJkOS1hYzVlLTIzNzlkZWI3MjZhNyIsImVtYWlsIjoiam9obmRvZUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE3MDYzNTczODF9.wbY9k71bXsjHAiz7Mifx9g2D4EM6w_Rg8eAqfkBk_VQ
+Content-Type: application/json
+
+{
+  "post": {
+    "title": "Great news",
+    "description": "Some description"
+  }
+}
+
+### Get List Of Posts
+GET http://localhost:3001/api/posts?limit=2&offset=0
+
+### Get Single Post
+GET http://localhost:3001/api/posts/4cf0f6d8-90b4-4b24-bbb9-318a840f2d6f
+
+### Delete Single Post
+DELETE http://localhost:3001/api/posts/66294a3a-3f35-4eb7-8028-201e3600e27c
+Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY3ZjRhYTEwLWY3NjAtNDJkOS1hYzVlLTIzNzlkZWI3MjZhNyIsImVtYWlsIjoiam9obmRvZUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE3MDYzNTczODF9.wbY9k71bXsjHAiz7Mifx9g2D4EM6w_Rg8eAqfkBk_VQ
+
+### Update Single Post
+PUT http://localhost:3001/api/posts/4cf0f6d8-90b4-4b24-bbb9-318a840f2d6f
+Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY3ZjRhYTEwLWY3NjAtNDJkOS1hYzVlLTIzNzlkZWI3MjZhNyIsImVtYWlsIjoiam9obmRvZUBnbWFpbC5jb20iLCJ1c2VybmFtZSI6ImpvaG4iLCJpYXQiOjE3MDYzNTczODF9.wbY9k71bXsjHAiz7Mifx9g2D4EM6w_Rg8eAqfkBk_VQ
+Content-Type: application/json
+
+{
+  "post": {
+    "title": "Updated title!",
+    "description": "Updated description!"
+  }
+}
