@@ -24,13 +24,19 @@ import { DeleteResult } from 'typeorm';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostsResponseInterface } from './types/posts-response.interface';
 import { INTERNAL_SERVER_ERROR } from './posts.constants';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiTags('Posts')
 @Controller('posts')
 export class PostsController {
   private readonly logger = new Logger(PostsController.name);
 
   constructor(private readonly postsService: PostsService) {}
 
+  @ApiOperation({ summary: 'Create post' })
+  @ApiResponse({ status: 201, description: 'The post has been successfully created' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
   @Post()
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
@@ -47,6 +53,8 @@ export class PostsController {
     }
   }
 
+  @ApiOperation({ summary: 'Get all posts' })
+  @ApiResponse({ status: 200, description: 'Return all posts' })
   @Get()
   public async findAllPosts(@User('id') currentUserId: string, @Query() query: any): Promise<PostsResponseInterface> {
     try {
@@ -57,6 +65,8 @@ export class PostsController {
     }
   }
 
+  @ApiOperation({ summary: 'Get single post' })
+  @ApiResponse({ status: 200, description: 'Return one post' })
   @Get(':id')
   public async findOnePost(@Param('id') id: string): Promise<PostResponseInterface> {
     try {
@@ -68,6 +78,9 @@ export class PostsController {
     }
   }
 
+  @ApiOperation({ summary: 'Delete post' })
+  @ApiResponse({ status: 201, description: 'The post has been successfully deleted' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
   @Delete(':id')
   public async deletePost(@User('id') currentUserId: string, @Param('id') id: string): Promise<DeleteResult> {
     try {
@@ -78,6 +91,9 @@ export class PostsController {
     }
   }
 
+  @ApiOperation({ summary: 'Update post' })
+  @ApiResponse({ status: 201, description: 'The post has been successfully updated' })
+  @ApiResponse({ status: 403, description: 'Forbidden' })
   @Put(':id')
   @UseGuards(AuthGuard)
   @UsePipes(new ValidationPipe())
